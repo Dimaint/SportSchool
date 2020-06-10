@@ -14,3 +14,5 @@ class KidsViewSet(viewsets.ModelViewSet):
 class KidDetailViewSet(viewsets.ModelViewSet):
     queryset = Kids.objects.all()
     serializer_class = KidDetailSerializer
+
+

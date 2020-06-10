@@ -30,8 +30,8 @@ class Parents(models.Model):
 class Kids(models.Model):
     first_name = models.CharField(max_length=30, verbose_name='Имя')
     last_name = models.CharField(max_length=30, verbose_name='Фамилия')
-    Birthday = models.DateField(default=timezone.now)
-    #category = models.ForeignKey(SportsCategories, on_delete=models.PROTECT)
+    birthday = models.DateField(default=timezone.now)
+
     parents = models.ForeignKey(Parents, on_delete=models.CASCADE, null=True)
 
     SPORT_CATEGORY = (
@@ -46,6 +46,7 @@ class Kids(models.Model):
         ('YF', 'Юный фигурист'),
     )
     sportCategory = models.CharField(max_length=3, choices=SPORT_CATEGORY, default='YF', verbose_name='Разряд')
+    photo = models.ImageField(upload_to='photo', null=True)
 
     def __str__(self):
         return self.last_name

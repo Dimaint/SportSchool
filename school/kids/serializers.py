@@ -21,4 +21,4 @@ class KidDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Kids
-        fields = ('first_name', 'last_name', 'Birthday', 'sportCategory', 'parents')
+        fields = ('id', 'first_name', 'last_name', 'birthday', 'sportCategory', 'photo', 'parents')

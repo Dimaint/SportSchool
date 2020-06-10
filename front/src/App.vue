@@ -1,60 +1,77 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+    <v-navigation-drawer app temporary v-model="drawer">
+      <v-list>
+        <v-list-item v-for="link of links" :key="link.title" :to="link.url">
+          <v-list-item-icon>
+            <v-icon>{{ link.icon }}</v-icon>
+          </v-list-item-icon>
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+          <v-list-item-content text-uppercase >
+            <v-list-item-title v-text="link.title"></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        
+      </v-list>
+    </v-navigation-drawer>
+    <v-card>
+      <v-toolbar dense>
+        <v-app-bar-nav-icon
+        class="hidden-md-and-up"
+        @click="drawer = !drawer"      
+        ></v-app-bar-nav-icon>
 
-      <v-spacer></v-spacer>
+        <v-toolbar-title>Title</v-toolbar-title>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
+        <v-spacer></v-spacer>
 
-    <v-content>
-      <HelloWorld/>
-    </v-content>
+        <v-toolbar-items class="hidden-sm-and-down">
+          <v-btn
+            text
+            small
+            v-for="link of links"
+            :key="link.title"
+            :to="link.url"
+          >
+            <v-icon left>{{ link.icon }}</v-icon>
+            {{ link.title }}</v-btn
+          >
+        </v-toolbar-items>
+      </v-toolbar>
+      <router-view></router-view>
+    </v-card>
+
+   
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+
+import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
-    HelloWorld,
+    
   },
-
   data: () => ({
     //
+    drawer: false,
+    links: [
+      { title: "Home", url: "/home", icon: "mdi-home" },
+      { title: "Kids", url: "/kids", icon: "mdi-format-list-bulleted"},
+      { title: "Shop", url: "/shop", icon: "mdi-cart-outline"},
+    ],
   }),
+  computed: {
+    ...mapGetters(["KIDS"]),
+  },
+  methods: {
+    ...mapActions(["GET_KIDS_FROM_API"]),
+  },
+  mounted() {
+    this.GET_KIDS_FROM_API();
+  },
 };
 </script>
