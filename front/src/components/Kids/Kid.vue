@@ -5,7 +5,7 @@
         <v-card :loading="loading" class="mx-auto my-12" max-width="374">
           <v-img
             height="250"
-            src="https://static7.depositphotos.com/1001046/690/v/450/depositphotos_6902641-stock-illustration-%D0%B7%D0%B8%D0%BC%D0%BD%D0%B8%D0%B5-%D0%B2%D0%B8%D0%B4%D1%8B-%D1%81%D0%BF%D0%BE%D1%80%D1%82%D0%B0-%D0%B4%D0%B0%D0%BC%D1%8B-%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%BD%D0%BE%D0%B3%D0%BE.jpg"
+            :src="kid.photo"
           ></v-img>
 
           <v-card-title>{{
@@ -14,7 +14,7 @@
 
           <v-card-text>
             <v-row>
-              <div class="grey--text ml-4">{{ kid.Birthday }}</div>
+              <div class="grey--text ml-4">{{ kid.birthday }}</div>
             </v-row>
 
             <div class="my-4 subtitle-1">Разряд: {{ kid.sportCategory }}</div>
