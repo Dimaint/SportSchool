@@ -2,14 +2,6 @@ from django.db import models
 from django.utils import timezone
 
 
-# class SportsCategories(models.Model):
-#     name = models.CharField(max_length=40)
-#     short_name = models.CharField(max_length=10)
-#
-#     def __str__(self):
-#         return self.short_name
-
-
 class Groups(models.Model):
     name = models.CharField(max_length=40)
 

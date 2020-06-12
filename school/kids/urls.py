@@ -8,6 +8,3 @@ router.register(r'kidsdetail', KidDetailViewSet)
 
 urlpatterns = router.urls
 
-# urlpatterns = [
-#
-# ]
