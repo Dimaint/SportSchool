@@ -7,7 +7,7 @@ from rest_framework import serializers
 class KidsSerializer(serializers.ModelSerializer):
     class Meta(serializers.ModelSerializer):
         model = Kids
-        fields = ('first_name', 'last_name', 'Birthday', 'sportCategory')
+        fields = ('id', 'first_name', 'last_name', 'birthday', 'sportCategory')
 
 
 class ParentsSerializer(serializers.ModelSerializer):
