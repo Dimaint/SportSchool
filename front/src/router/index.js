@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/components/Home'
 import Shop from '@/components/Shop/Shop'
-import KidsList from '@/components/Kids/KidsList'
+import productDetail from '@/components/Shop/product-detail'
+import kidsList from '@/components/Kids/kidsList'
 import Kid from '@/components/Kids/Kid'
 
 Vue.use(VueRouter)
@@ -10,18 +11,24 @@ Vue.use(VueRouter)
   const routes = [
   {
     path: '/home',
-    name: 'Home',
+    name: 'home',
     component: Home
   },
   {
     path: '/shop',
-    name: 'Shop',
+    name: 'shop',
     component: Shop
   },
   {
+    path: '/product/:id',
+    name: 'product',
+    props: true,
+    component: productDetail
+  },
+  {
     path: '/kids',
-    name: 'KidsList',
-    component: KidsList
+    name: 'kidsList',
+    component: kidsList
   },
   {
     path: '/kid/:id',

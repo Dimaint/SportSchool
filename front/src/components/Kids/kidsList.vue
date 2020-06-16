@@ -14,7 +14,7 @@ import vTable from "./table/v-table";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "KidsList",
+  name: "kidsList",
 
   components: {
     vTable,

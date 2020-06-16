@@ -71,9 +71,9 @@ export default {
   name: "Kid",
   props: ["id"],
   computed: {
-    // eslint-disable-next-line vue/return-in-computed-property
+    
     kid() {
-      // eslint-disable-next-line no-unused-vars
+     
       const id = +this.$route.params.id;
       return this.$store.getters.KID_BY_ID(id);
     },

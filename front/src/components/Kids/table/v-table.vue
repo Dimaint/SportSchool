@@ -12,7 +12,7 @@
         </v-list-item-avatar>
         
         <v-list-item-content>
-          <v-list-item-title v-text="kid.last_name"></v-list-item-title>
+          <v-list-item-title v-text="kid.last_name + '  '+ kid.first_name"></v-list-item-title>
         </v-list-item-content>
 
        
