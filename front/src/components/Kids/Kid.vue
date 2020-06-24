@@ -67,15 +67,17 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
   name: "Kid",
   props: ["id"],
   computed: {
+    ...mapGetters(['KID_BY_ID']),
     
     kid() {
      
       const id = +this.$route.params.id;
-      return this.$store.getters.KID_BY_ID(id);
+      return this.KID_BY_ID(id);
     },
   },
   methods: {},

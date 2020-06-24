@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     kids: [],
-    products: []
+    products: [],
+    cart: [],
   },
   mutations: {
     SET_KIDS_TO_VUEX: (state, kids) => {
@@ -15,6 +16,26 @@ export default new Vuex.Store({
     },
     SET_PRODUCTS_TO_VUEX: (state, products) => {
       state.products = products
+    },
+    SET_CART: (state, product) => {
+      if (state.cart) {
+        let isProductExist = false;
+        state.cart.map(function(item){
+          if (item.id === product.id) {
+            isProductExist = true;
+            item.quantity++
+          }
+        })
+        if (!isProductExist) {
+          state.cart.push(product)
+        }
+      } else {
+        state.cart.push(product)
+      }
+      
+    },
+    REMOVE_FROM_CART: (state, index) => {
+      state.cart.splice(index, 1)
     }
   },
   actions: {
@@ -33,6 +54,12 @@ export default new Vuex.Store({
       .then((response) => {
         commit('SET_PRODUCTS_TO_VUEX', response.data)
       })
+    },
+    ADD_TO_CART({commit}, product) {
+      commit('SET_CART', product)
+    },
+    DELETE_FROM_CART({commit}, index) {
+      commit('REMOVE_FROM_CART', index)
     }
   },
   
@@ -51,6 +78,8 @@ export default new Vuex.Store({
     PRODUCT_BY_ID:state => id => {
       return state.products.find(product => product.id === id);
     },
-    
+    CART(state) {
+      return state.cart;
+    }
   }
 })

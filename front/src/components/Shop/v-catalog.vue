@@ -10,6 +10,7 @@
       :key="product.id"
       :product_data="product"
       @productDetail="productDetail"
+      @addToCart="addToCart"
       />
       
     </v-row>
@@ -18,6 +19,7 @@
 
 <script>
 import vCatalogItem from "./v-catalog-item";
+import {mapActions} from 'vuex'
 
 export default {
   name: "v-catalog",
@@ -33,8 +35,12 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['ADD_TO_CART']),
     productDetail(id) {
       this.$router.push({name: 'product', query: {'product': id }})
+    },
+    addToCart(data) {
+      this.ADD_TO_CART(data)
     }
   },
   data() {

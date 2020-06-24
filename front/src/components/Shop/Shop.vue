@@ -1,7 +1,10 @@
 <template>
   <div class="shop">
     <v-catalog :products_data="PRODUCTS"/>
-    <v-cart />
+    <v-cart 
+      v-if="CART.length"
+      :cart_data="CART"
+      />
   </div>
 </template>
 
@@ -17,7 +20,8 @@ export default {
   },
   data: () => ({}),
   computed: {
-    ...mapGetters(["PRODUCTS"]),
+    ...mapGetters(["PRODUCTS", "CART"]),
+    
   },
   methods: {
     ...mapActions(["GET_PRODUCTS_FROM_API"]),

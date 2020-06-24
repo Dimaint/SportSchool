@@ -6,15 +6,23 @@
       {{ product_data.name }}
     </v-card-title>
 
-    <v-card-subtitle class="green--text">
-      Price: {{ product_data.price }} р.
+    <v-card-subtitle >
+      <v-chip class="green--text ">{{ product_data.price }} р.</v-chip>
+      <v-spacer></v-spacer>
+      
+      <p  class="text-uppercase font-weight-light">{{product_data.type}}</p>
     </v-card-subtitle>
     <v-card-text>
       {{ product_data.description }}
     </v-card-text>
 
     <v-card-actions>
-      <v-btn tile color="success">ADD TO CART</v-btn>
+      <v-btn 
+      tile
+      color="success"
+      @click="addToCart"
+      >ADD TO CART
+      </v-btn>
 
       <v-btn tile outlined color="secondary"  :to="'/product/' + product_data.id">
         Detail
@@ -37,9 +45,9 @@ export default {
     },
   },
   methods: {
-    // productDetail() {
-    //   this.$emit("productDetail", this.product_data.id);
-    // },
+    addToCart() {
+      this.$emit('addToCart', this.product_data)
+    }
   },
 };
 </script>
