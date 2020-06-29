@@ -1,6 +1,15 @@
 <template>
   <v-container class="v-catalog">
     <v-row class="justify-center mb-5">
+      <router-link
+      v-if="CART.length" 
+      :to="{name: 'cart', params: {cart_data: CART} }"
+      >
+        <div class="v-catalog__link_to_cart">
+          Cart: {{CART.length}}
+        </div>
+      </router-link>
+      
       <h1>catalog</h1>
     </v-row>
     <v-row class="">
@@ -19,7 +28,7 @@
 
 <script>
 import vCatalogItem from "./v-catalog-item";
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: "v-catalog",
@@ -33,6 +42,10 @@ export default {
         return []
       }
     }
+  },
+  computed: {
+    ...mapGetters(["CART"]),
+    
   },
   methods: {
     ...mapActions(['ADD_TO_CART']),
@@ -105,3 +118,13 @@ export default {
   },
 };
 </script>
+
+<style lang="css">
+   .v-catalog__link_to_cart {
+        position: absolute;
+        top: 60px;
+        right: 10px;
+        padding: 16px;
+        border: 1px solid #aeaeae;
+    }
+</style>

@@ -5,6 +5,7 @@ import Shop from '@/components/Shop/Shop'
 import productDetail from '@/components/Shop/product-detail'
 import kidsList from '@/components/Kids/kidsList'
 import Kid from '@/components/Kids/Kid'
+import cart from '@/components/Shop/v-cart'
 
 Vue.use(VueRouter)
 
@@ -18,6 +19,12 @@ Vue.use(VueRouter)
     path: '/shop',
     name: 'shop',
     component: Shop
+  },
+  {
+    path: '/shop/cart',
+    name: 'cart',
+    component: cart,
+    props: true,
   },
   {
     path: '/product/:id',

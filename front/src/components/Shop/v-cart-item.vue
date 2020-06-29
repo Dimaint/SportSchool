@@ -1,7 +1,8 @@
 <template>
   <v-card
-    class="mx-auto"
+    class="mx-auto mb-5"
     max-width="300"
+    
   >
     <v-img
       :src="cart_item_data.photo"
@@ -17,7 +18,10 @@
     </v-card-subtitle>
 
     <v-card-actions>
-      <v-btn text>ADD</v-btn>
+      <v-btn 
+      text
+      @click="addQuantity"
+      >ADD</v-btn>
 
       <v-btn
         color="purple"
@@ -68,6 +72,9 @@ export default {
   methods: {
     delFromCart() {
       this.$emit('delFromCart')
+    },
+    addQuantity() {
+      this.cart_item_data.quantity++
     }
   },
   
