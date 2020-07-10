@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 
+
 class Groups(models.Model):
     name = models.CharField(max_length=40)
 
@@ -39,6 +40,7 @@ class Kids(models.Model):
     )
     sportCategory = models.CharField(max_length=3, choices=SPORT_CATEGORY, default='YF', verbose_name='Разряд')
     photo = models.ImageField(upload_to='photo', null=True)
+    trainer = models.ForeignKey('staff.Trainer', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.last_name

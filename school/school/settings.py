@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'kids.apps.KidsConfig',
-    'shop.apps.ShopConfig'
+    'shop.apps.ShopConfig',
+    'staff.apps.StaffConfig'
 ]
 
 MIDDLEWARE = [
