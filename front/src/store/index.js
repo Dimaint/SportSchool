@@ -9,6 +9,7 @@ export default new Vuex.Store({
     kids: [],
     products: [],
     cart: [],
+    trainers: [],
   },
   mutations: {
     SET_KIDS_TO_VUEX: (state, kids) => {
@@ -36,6 +37,9 @@ export default new Vuex.Store({
     },
     REMOVE_FROM_CART: (state, index) => {
       state.cart.splice(index, 1)
+    },
+    SET_TRAINERS_TO_VUEX: (state, trainers) => {
+      state.trainers = trainers
     }
   },
   actions: {
@@ -60,6 +64,14 @@ export default new Vuex.Store({
     },
     DELETE_FROM_CART({commit}, index) {
       commit('REMOVE_FROM_CART', index)
+    },
+    GET_TRAINERS_FROM_API({commit}) {
+      return axios('http://localhost:8000/api/v1/trainers/', {
+        method: 'GET'
+      })
+        .then((response) => {
+          commit('SET_TRAINERS_TO_VUEX', response.data)
+        })
     }
   },
   
@@ -80,6 +92,15 @@ export default new Vuex.Store({
     },
     CART(state) {
       return state.cart;
+    },
+    TRAINERS(state) {
+      return state.trainers;
+    },
+    TRAINER_BY_ID:state => id => {
+      return state.trainers.find(item => item.id === id);
+    },
+    KIDS_BY_TRAINER_ID:state => id => {
+      return state.kids.filter(item => item.trainer.id === id)
     }
   }
 })

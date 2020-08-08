@@ -65,6 +65,7 @@ export default {
       { title: "Home", url: "/home", icon: "mdi-home" },
       { title: "Kids", url: "/kids", icon: "mdi-format-list-bulleted"},
       { title: "Shop", url: "/shop", icon: "mdi-cart-outline"},
+      { title: "Trainers", url: "/trainers", icon: "mdi-account-group"}
     ],
   }),
   computed: {

@@ -6,6 +6,8 @@ import productDetail from '@/components/Shop/product-detail'
 import kidsList from '@/components/Kids/kidsList'
 import Kid from '@/components/Kids/Kid'
 import cart from '@/components/Shop/v-cart'
+import trainers from '@/components/trainers/Trainers'
+import trainer from '../components/trainers/v-trainer'
 
 Vue.use(VueRouter)
 
@@ -43,6 +45,17 @@ Vue.use(VueRouter)
     name: 'kid',
     component: Kid
   },
+  {
+    path: '/trainers',
+    namet: 'trainers',
+    component: trainers
+  },
+  {
+    path: '/trainer/:id',
+    props: true,
+    name: trainer,
+    component: trainer
+  }
 
 ]
 
