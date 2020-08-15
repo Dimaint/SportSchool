@@ -8,6 +8,9 @@ import Kid from '@/components/Kids/Kid'
 import cart from '@/components/Shop/v-cart'
 import trainers from '@/components/trainers/Trainers'
 import trainer from '../components/trainers/v-trainer'
+import login from '../components/Auth/Login'
+import registration from '../components/Auth/Registration'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -37,7 +40,10 @@ Vue.use(VueRouter)
   {
     path: '/kids',
     name: 'kidsList',
-    component: kidsList
+    component: kidsList,
+    meta: { 
+      requiresAuth: true
+    }
   },
   {
     path: '/kid/:id',
@@ -48,13 +54,25 @@ Vue.use(VueRouter)
   {
     path: '/trainers',
     namet: 'trainers',
-    component: trainers
+    component: trainers,
+    
   },
   {
     path: '/trainer/:id',
     props: true,
     name: trainer,
-    component: trainer
+    component: trainer,
+    
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: login
+  },
+  {
+    path: '/registration',
+    name: 'registration',
+    component: registration
   }
 
 ]
@@ -63,6 +81,18 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn == true) {
+      next()
+      return
+    }
+    next('/login') 
+  } else {
+    next() 
+  }
 })
 
 export default router

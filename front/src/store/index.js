@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import status from './status'
 
 Vue.use(Vuex)
 
@@ -10,6 +11,8 @@ export default new Vuex.Store({
     products: [],
     cart: [],
     trainers: [],
+    isAuthenticated: false,
+    jwt: localStorage.getItem('token'),
   },
   mutations: {
     SET_KIDS_TO_VUEX: (state, kids) => {
@@ -40,7 +43,26 @@ export default new Vuex.Store({
     },
     SET_TRAINERS_TO_VUEX: (state, trainers) => {
       state.trainers = trainers
+    },
+    //auth
+    SET_AUTH_USER(state) {
+      //Vue.set(state, 'isAuthenticated', isAuthenticated)
+      state.isAuthenticated = true
+    },
+
+    UPDATE_TOKEN(state, newToken) {
+      
+      localStorage.setItem('token', newToken);
+      state.jwt = newToken;
+    },
+
+    REMOVE_TOKEN(state) {
+      
+      localStorage.removeItem('token');
+      state.jwt = null;
+      state.isAuthenticated = false;
     }
+    
   },
   actions: {
     GET_KIDS_FROM_API({commit}) {
@@ -72,10 +94,34 @@ export default new Vuex.Store({
         .then((response) => {
           commit('SET_TRAINERS_TO_VUEX', response.data)
         })
-    }
+    },
+    //auth
+    
+      
+    VERIFICATION_JWT({commit, state}) {
+      //const str = JSON.stringify(state.jwt);
+      const headers = {
+        token: state.jwt
+      }
+      axios.post('http://localhost:8000/auth/jwt/verify/', headers)
+      
+      .then((response) => {
+        console.log(response.status)
+        if(response.status === 200) {
+           commit("SET_AUTH_USER")
+         } else {
+           commit("REMOVE_TOKEN")
+         }
+        
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    },
   },
   
   modules: {
+    status,
   },
   getters: {
     KIDS(state) {
@@ -101,6 +147,7 @@ export default new Vuex.Store({
     },
     KIDS_BY_TRAINER_ID:state => id => {
       return state.kids.filter(item => item.trainer.id === id)
-    }
+    },
+    isLoggedIn: state => state.isAuthenticated
   }
 })

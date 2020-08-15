@@ -11,6 +11,13 @@
             <v-list-item-title v-text="link.title"></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item>
+          <v-spacer/>
+          <v-btn text v-if="isUserLoggedIn" @click="onLogout">
+            <v-icon left>mdi-logout</v-icon>Logout</v-btn
+          >
+          <v-spacer/>
+        </v-list-item>
         
       </v-list>
     </v-navigation-drawer>
@@ -36,6 +43,9 @@
             <v-icon left>{{ link.icon }}</v-icon>
             {{ link.title }}</v-btn
           >
+          <v-btn text v-if="isUserLoggedIn" @click="onLogout">
+            <v-icon left>mdi-logout</v-icon>Logout</v-btn
+          >
         </v-toolbar-items>
       </v-toolbar>
       <keep-alive>
@@ -51,6 +61,7 @@
 <script>
 
 import { mapActions, mapGetters } from "vuex";
+//import axios from 'axios'
 
 export default {
   name: "App",
@@ -65,17 +76,28 @@ export default {
       { title: "Home", url: "/home", icon: "mdi-home" },
       { title: "Kids", url: "/kids", icon: "mdi-format-list-bulleted"},
       { title: "Shop", url: "/shop", icon: "mdi-cart-outline"},
-      { title: "Trainers", url: "/trainers", icon: "mdi-account-group"}
+      { title: "Trainers", url: "/trainers", icon: "mdi-account-group"},
+      { title: "Login", url: "/login", icon: "mdi-lock-open-variant"},
+      { title: "Registration", url: "/registration", icon: "mdi-account-plus"}
+
     ],
   }),
   computed: {
-    ...mapGetters(["KIDS"]),
+    ...mapGetters(["KIDS", "isLoggedIn"]),
+    isUserLoggedIn() {
+      return this.$store.getters.isLoggedIn
+    }
   },
   methods: {
-    ...mapActions(["GET_KIDS_FROM_API"]),
+    ...mapActions(["GET_KIDS_FROM_API", "VERIFICATION_JWT", "REMOVE_TOKEN"]),
+    onLogout () {
+      this.$store.commit('REMOVE_TOKEN')
+    }
   },
   mounted() {
     this.GET_KIDS_FROM_API();
+    this.VERIFICATION_JWT();
   },
+  
 };
 </script>
