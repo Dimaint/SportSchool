@@ -61,7 +61,8 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
+import {mapActions} from 'vuex'
 
 export default {
   data() {
@@ -96,6 +97,8 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['REGISTRATION_JWT']),
+
     onRegistration() {
       if (this.$refs.form.validate()) {
         const payload = {
@@ -103,15 +106,14 @@ export default {
           password: this.password,
           email: this.email,
         };
-        axios
-          .post("http://localhost:8000/auth/users/", payload)
+        // axios.post("http://localhost:8000/auth/users/", payload)
+        this.REGISTRATION_JWT(payload)
           .then(() => {
-            this.$router.push({ name: "home" });
+            this.$router.push({ name: "login" });
           })
           .catch((error) => {
             console.log(error);
-            // console.debug(error);
-            // console.dir(error);
+            
           });
       }
     },

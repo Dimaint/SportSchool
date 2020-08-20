@@ -28,7 +28,7 @@
         @click="drawer = !drawer"      
         ></v-app-bar-nav-icon>
 
-        <v-toolbar-title>Title</v-toolbar-title>
+        <v-toolbar-title >Title</v-toolbar-title>
 
         <v-spacer></v-spacer>
 
@@ -61,7 +61,6 @@
 <script>
 
 import { mapActions, mapGetters } from "vuex";
-//import axios from 'axios'
 
 export default {
   name: "App",
@@ -72,21 +71,42 @@ export default {
   data: () => ({
     //
     drawer: false,
-    links: [
-      { title: "Home", url: "/home", icon: "mdi-home" },
-      { title: "Kids", url: "/kids", icon: "mdi-format-list-bulleted"},
-      { title: "Shop", url: "/shop", icon: "mdi-cart-outline"},
-      { title: "Trainers", url: "/trainers", icon: "mdi-account-group"},
-      { title: "Login", url: "/login", icon: "mdi-lock-open-variant"},
-      { title: "Registration", url: "/registration", icon: "mdi-account-plus"}
+    // links: [
+    //   { title: "Home", url: "/home", icon: "mdi-home" },
+    //   { title: "Kids", url: "/kids", icon: "mdi-format-list-bulleted"},
+    //   { title: "Shop", url: "/shop", icon: "mdi-cart-outline"},
+    //   { title: "Trainers", url: "/trainers", icon: "mdi-account-group"},
+    //   { title: "Login", url: "/login", icon: "mdi-lock-open-variant"},
+    //   { title: "Registration", url: "/registration", icon: "mdi-account-plus"}
 
-    ],
+    // ],
   }),
   computed: {
     ...mapGetters(["KIDS", "isLoggedIn"]),
     isUserLoggedIn() {
       return this.$store.getters.isLoggedIn
-    }
+    },
+    links() {
+      if (this.$store.getters.isLoggedIn) {
+        return [
+          { title: "Home", url: "/home", icon: "mdi-home" },
+          { title: "Kids", url: "/kids", icon: "mdi-format-list-bulleted"},
+          { title: "Shop", url: "/shop", icon: "mdi-cart-outline"},
+          { title: "Trainers", url: "/trainers", icon: "mdi-account-group"},
+          // { title: "Login", url: "/login", icon: "mdi-lock-open-variant"},
+          // { title: "Registration", url: "/registration", icon: "mdi-account-plus"}
+        ]
+      } else {
+        return [
+          { title: "Home", url: "/home", icon: "mdi-home" },
+          //{ title: "Kids", url: "/kids", icon: "mdi-format-list-bulleted"},
+          { title: "Shop", url: "/shop", icon: "mdi-cart-outline"},
+          //{ title: "Trainers", url: "/trainers", icon: "mdi-account-group"},
+          { title: "Login", url: "/login", icon: "mdi-lock-open-variant"},
+          { title: "Registration", url: "/registration", icon: "mdi-account-plus"}
+        ]
+      }
+    },
   },
   methods: {
     ...mapActions(["GET_KIDS_FROM_API", "VERIFICATION_JWT", "REMOVE_TOKEN"]),

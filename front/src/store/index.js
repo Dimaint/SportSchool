@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import status from './status'
+// import user from './user'
 
 Vue.use(Vuex)
 
@@ -44,7 +45,7 @@ export default new Vuex.Store({
     SET_TRAINERS_TO_VUEX: (state, trainers) => {
       state.trainers = trainers
     },
-    //auth
+    // auth
     SET_AUTH_USER(state) {
       //Vue.set(state, 'isAuthenticated', isAuthenticated)
       state.isAuthenticated = true
@@ -96,10 +97,8 @@ export default new Vuex.Store({
         })
     },
     //auth
-    
-      
     VERIFICATION_JWT({commit, state}) {
-      //const str = JSON.stringify(state.jwt);
+      
       const headers = {
         token: state.jwt
       }
@@ -118,10 +117,43 @@ export default new Vuex.Store({
         console.log(error);
       });
     },
+    
+    async LOGIN_JWT({commit}, payload) {
+      commit('setLoading', true)
+          try {
+              const response = await axios.post("http://localhost:8000/auth/jwt/create/", payload)
+              // .then((response) => {
+              commit("UPDATE_TOKEN", response.data.access);
+              // console.log(response.data.access)
+              commit("SET_AUTH_USER", { isAuthenticated: true });
+              commit('setLoading', false) //}) 
+          }
+          catch(error) {
+              //console.log(error);
+              commit('setLoading', false)
+              commit('setError', error.message)
+              throw error
+          }
+      },
+    async REGISTRATION_JWT({commit},payload) {
+        commit('setLoading', true)
+          try {
+            await axios.post("http://localhost:8000/auth/users/", payload)
+            commit('setLoading', false)
+          }
+          catch(error) {
+            commit('setLoading', false)
+            commit('setError', error.message)
+            throw error
+          }
+      }
+      
+    
   },
   
   modules: {
     status,
+    
   },
   getters: {
     KIDS(state) {

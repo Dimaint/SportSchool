@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   data() {
@@ -75,18 +75,22 @@ export default {
         username: this.username,
         password: this.password,
       };
-      axios.post("http://localhost:8000/auth/jwt/create/", payload)
-        .then((response) => {
-          this.$store.commit("UPDATE_TOKEN", response.data.access);
-          // console.log(response.data.access)
-          this.$store.commit("SET_AUTH_USER", { isAuthenticated: true });
-          this.$router.push({ name: "home" });
-        })
-        .catch((error) => {
-          console.log(error);
-          // console.debug(error);
-          // console.dir(error);
-        });
+      this.$store.dispatch('LOGIN_JWT', payload)
+        .then(() => {this.$router.push({ name: "home" }); 
+                    })
+        .catch(err => console.log(err))
+      // axios.post("http://localhost:8000/auth/jwt/create/", payload)
+      //   .then((response) => {
+      //     this.$store.commit("UPDATE_TOKEN", response.data.access);
+      //     // console.log(response.data.access)
+      //     this.$store.commit("SET_AUTH_USER", { isAuthenticated: true });
+      //     this.$router.push({ name: "home" });
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //     // console.debug(error);
+      //     // console.dir(error);
+      //   });
     },
   },
 };
