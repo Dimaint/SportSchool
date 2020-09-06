@@ -5,6 +5,14 @@ from django.utils import timezone
 
 class Groups(models.Model):
     name = models.CharField(max_length=40)
+    description = models.TextField(verbose_name='Краткое описание группы', default='')
+    WEEK_DAYS = (
+        ('1,3,5', 'Вторник/Четверг'),
+        ('2,4,5', 'Понедельник/Вторник'),
+
+    )
+    days = models.CharField(max_length=30, choices=WEEK_DAYS, default='none')
+    # time = models.TimeField(auto_now=True, auto_now_add=False)
 
     def __str__(self):
         return self.name
@@ -41,6 +49,7 @@ class Kids(models.Model):
     sportCategory = models.CharField(max_length=3, choices=SPORT_CATEGORY, default='YF', verbose_name='Разряд')
     photo = models.ImageField(upload_to='photo', null=True)
     trainer = models.ForeignKey('staff.Trainer', on_delete=models.CASCADE, null=True)
+    group = models.ForeignKey(Groups, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.last_name

@@ -37,29 +37,36 @@
 
           <v-card-text>
             <v-chip-group
-              v-model="selection"
+              
               active-class="deep-purple accent-4 white--text"
               column
             >
-              <v-chip>5:30PM</v-chip>
+              <v-chip>{{kid.group.name}}</v-chip>
 
-              <v-chip>7:30PM</v-chip>
+              <v-chip>{{kid.group. description}}</v-chip>
 
-              <v-chip>8:00PM</v-chip>
+              <!-- <v-chip>8:00PM</v-chip>
 
-              <v-chip>9:00PM</v-chip>
+              <v-chip>9:00PM</v-chip> -->
             </v-chip-group>
           </v-card-text>
 
-          <!-- <v-card-actions>
-      <v-btn
-        color="deep-purple lighten-2"
-        text
-        @click="reserve"
-      >
-        Reserve
-      </v-btn>
-    </v-card-actions> -->
+          <v-sheet height="400">
+            <v-calendar
+              ref="calendar"
+              v-model="value"
+              :type="type"
+              :now="today"
+              :weekdays="kid.group.days"
+              :events="events"
+              :event-overlap-mode="mode"
+              :event-overlap-threshold="30"
+              color="primary"
+              
+            ></v-calendar>
+          </v-sheet>
+
+       
         </v-card>
       </v-flex>
     </v-layout>
@@ -71,6 +78,11 @@ import {mapGetters} from 'vuex'
 export default {
   name: "Kid",
   props: ["id"],
+  data() {
+    return {
+      today : new Date().toISOString().substr(0, 10),
+    }
+  },
   computed: {
     ...mapGetters(['KID_BY_ID']),
     
@@ -80,6 +92,8 @@ export default {
       return this.KID_BY_ID(id);
     },
   },
-  methods: {},
+  methods: {
+    
+  },
 };
 </script>
