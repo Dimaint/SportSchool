@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 
 
 class Products(models.Model):
@@ -18,3 +19,26 @@ class Products(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Orders(models.Model):
+    firstName = models.CharField(max_length=30, verbose_name="Имя")
+    lastName = models.CharField(max_length=30, verbose_name="Фамилия")
+    middleName = models.CharField(max_length=30, verbose_name="Отчество", blank="true")
+    email = models.CharField(max_length=100, verbose_name="Э.Почта")
+    phone = models.CharField(max_length=12, verbose_name="Телефон")
+    address = models.TextField(verbose_name='Адрес доставки', default='')
+    message = models.TextField(verbose_name='Сообщение заказчика', default='', blank="true")
+    cart = JSONField(blank="true") #сменить на false
+    cartTotalCost = models.CharField(max_length=100, verbose_name="Итоговая цена")
+    STATUSES = (
+        ('Создан', 'Создан'),
+        ('Принят', 'Принят'),
+        ('Подготавливается', 'Подготавливается'),
+        ('Доступен', 'Доступен'),
+        ('На доставке', 'На доставке'),
+        ('Доставлен', 'Доставлен'),
+
+    )
+    status = models.CharField(max_length=20, choices=STATUSES, default='Создан')
+    isComplete = models.BooleanField(default=False)
