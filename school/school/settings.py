@@ -52,7 +52,9 @@ INSTALLED_APPS = [
     #my apps
     'kids.apps.KidsConfig',
     'shop.apps.ShopConfig',
-    'staff.apps.StaffConfig'
+    'staff.apps.StaffConfig',
+    # postgresql
+    'django.contrib.postgres'
 ]
 
 MIDDLEWARE = [
@@ -172,7 +174,7 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'school_db',
+        'NAME': 'sport_school_db',
         'USER': 'sport_school',
         'PASSWORD': '123456',
         'HOST' : '127.0.0.1',
