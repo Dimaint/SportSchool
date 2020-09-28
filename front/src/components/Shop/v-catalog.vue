@@ -121,10 +121,12 @@ export default {
 
 <style lang="css">
    .v-catalog__link_to_cart {
-        position: absolute;
+        position: fixed;
+        z-index: 100;
         top: 60px;
         right: 10px;
         padding: 16px;
         border: 1px solid #aeaeae;
+        background: gainsboro;
     }
 </style>

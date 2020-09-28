@@ -13,7 +13,7 @@ import { mapActions, mapGetters } from "vuex";
 import vCatalog from "./v-catalog";
 // import vCart from "./v-cart";
 export default {
-  name: "Schop",
+  name: "Shop",
   components: {
     vCatalog,
     

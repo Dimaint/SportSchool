@@ -74,7 +74,7 @@ Vue.use(VueRouter)
     name: 'registration',
     component: registration
   }
-
+  
 ]
 
 const router = new VueRouter({

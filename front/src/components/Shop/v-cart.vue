@@ -20,7 +20,7 @@
       <v-dialog v-model="dialog" persistent max-width="600px">
         <template v-slot:activator="{ on, attrs }">
           <v-btn color="green darken-1" dark v-bind="attrs" v-on="on">
-            Buy({{cart_data.length}}) = $1000
+            Buy({{cart_data.length}}) = {{cartTotalCost}} Р.
           </v-btn>
         </template>
         <v-card>
@@ -45,7 +45,7 @@
                     <v-text-field
                       label="Legal last name*"
                       hint="Обязательное поле"
-                      v-model="lastname"
+                      v-model="lastName"
                       persistent-hint
                       required
                       :rules="lastNameRules"
@@ -60,6 +60,7 @@
                   <v-col cols="12">
                     <v-text-field
                       label="Email*"
+                      v-model="email"
                       :rules="emailRules"
                       required
                     ></v-text-field>
@@ -97,16 +98,19 @@
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col cols="4">
-                    <v-subheader>Total Price</v-subheader>
-                  </v-col>
+                  <!-- <v-col cols="4">
+                    <v-subheader>Total Price =  </v-subheader>
+                  </v-col> -->
                   <v-col cols="8">
-                    <v-text-field
-                      disabled
-                      label="Amount"
-                      value="10.00"
-                      prefix="$"
-                    ></v-text-field>
+                    <v-chip
+                    class="ma-2"
+                    label
+                    default
+                    color="green"
+                    text-color="white"
+                  >
+                    Total Price = {{cartTotalCost}} P.
+                  </v-chip>
                   </v-col>
                 </v-row>
               </v-form>
@@ -122,8 +126,8 @@
               color="blue darken-1"
               :disabled="!valid"
               text
-              @click="dialog = false"
-              >Buy</v-btn
+              @click="onCreateOrder"
+              >Buy(Create Order)</v-btn
             >
           </v-card-actions>
         </v-card>
@@ -181,12 +185,44 @@ export default {
       },
     },
   },
-  computed: {},
+  computed: {
+    cartTotalCost() {
+      let result = [];
+
+      for (let item of this.cart_data) {
+        result.push(item.price * item.quantity)
+      }
+      result = result.reduce(function(sum, el){
+        return sum + el;
+      })
+
+      return result
+    },
+  },
   methods: {
     ...mapActions(["DELETE_FROM_CART"]),
 
     delFromCart(index) {
       this.DELETE_FROM_CART(index);
+    },
+    //формирование заказа - корзина + форма + цена
+    onCreateOrder() {
+      const payload = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        middleName: this.middleName,
+        email: this.email,
+        phone: this.phone,
+        address: this.address,
+        message: this.message,
+        cart: JSON.stringify(this.cart_data),
+        cartTotalCost: this.cartTotalCost,
+    };
+    this.$store.dispatch('CREATE_ORDER', payload)
+        .then(() => {this.$router.push({ name: "shop" });
+        console.log(payload)
+                    })
+        .catch(err => console.log(err))
     },
   },
 };

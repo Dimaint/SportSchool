@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-layout row>
       <v-flex xs12>
-        <v-card :loading="loading" class="mx-auto my-12" max-width="374">
+        <v-card :loading="loading" class="mx-auto my-12" max-width="400">
           <v-img
             height="250"
             :src="kid.photo"
@@ -33,17 +33,25 @@
 
           <v-divider class="mx-4"></v-divider>
 
+          <v-chip
+                class="ma-2"
+                color="green"
+                text-color="white"
+              >
+                <v-icon left>mdi-label</v-icon>
+                Counter
+              </v-chip>
+
           <v-card-title>Группа</v-card-title>
 
           <v-card-text>
             <v-chip-group
-              
-              active-class="deep-purple accent-4 white--text"
               column
             >
-              <v-chip>{{kid.group.name}}</v-chip>
+              
+              <v-chip><v-icon left>mdi-clipboard-outline</v-icon>{{kid.group.name}}</v-chip>
 
-              <v-chip>{{kid.group. description}}</v-chip>
+              <v-chip><v-icon left>mdi-alarm-check</v-icon>{{kid.group. description}}</v-chip>
 
               <!-- <v-chip>8:00PM</v-chip>
 

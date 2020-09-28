@@ -146,8 +146,20 @@ export default new Vuex.Store({
             commit('setError', error.message)
             throw error
           }
+      },
+      async CREATE_ORDER({commit} ,payload) {
+        commit('setLoading', true)
+        console.log(payload)
+          try {
+            await axios.post("http://127.0.0.1:8000/api/v1/orders/", payload)
+            commit('setLoading', false)
+          }
+          catch(error) {
+            commit('setLoading', false)
+            commit('setError', error.message)
+            throw error
+          }
       }
-      
     
   },
   
