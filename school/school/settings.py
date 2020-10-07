@@ -87,9 +87,9 @@ REST_FRAMEWORK = {
         # 'rest_framework.permissions.IsAuthenticated',
         'rest_framework.permissions.AllowAny',
     ),
-    # "DEFAULT_PARSER_CLASSES": [
-    #         "rest_framework.parsers.JSONParser",
-    #     ],
+    "DEFAULT_PARSER_CLASSES": [
+            "rest_framework.parsers.JSONParser",
+        ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -174,7 +174,7 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'sport_school_db',
+        'NAME': 'sport_school_db', #'django_db',
         'USER': 'sport_school',
         'PASSWORD': '123456',
         'HOST' : '127.0.0.1',

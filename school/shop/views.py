@@ -8,10 +8,10 @@ from .serializers import ProductsSerializer, OrdersSerializer
 class ProductsViewSet(viewsets.ModelViewSet):
     queryset = Products.objects.all()
     serializer_class = ProductsSerializer
-    http_method_names = ['get']
+    # http_method_names = ['get']
 
 
 class OrdersViewSet(viewsets.ModelViewSet):
     queryset = Orders.objects.all()
     serializer_class = OrdersSerializer
-    http_method_names = ['get', 'post']
+    http_method_names = ['get', 'post', 'put']
