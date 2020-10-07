@@ -4,7 +4,7 @@ import Home from '@/components/Home'
 import Shop from '@/components/Shop/Shop'
 import productDetail from '@/components/Shop/product-detail'
 import kidsList from '@/components/Kids/kidsList'
-import Kid from '@/components/Kids/Kid'
+import kidDetail from '@/components/Kids/kidDetail'
 import cart from '@/components/Shop/v-cart'
 import trainers from '@/components/trainers/Trainers'
 import trainer from '../components/trainers/v-trainer'
@@ -48,8 +48,8 @@ Vue.use(VueRouter)
   {
     path: '/kid/:id',
     props: true,
-    name: 'kid',
-    component: Kid
+    name: 'kidDetail',
+    component: kidDetail
   },
   {
     path: '/trainers',

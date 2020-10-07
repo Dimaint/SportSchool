@@ -159,7 +159,51 @@ export default new Vuex.Store({
             commit('setError', error.message)
             throw error
           }
-      }
+      },
+      //visit log
+      async USE_TICKET_API({commit} ,payload) {
+        commit('setLoading', true)
+        // console.log(payload)
+        let url = 'http://127.0.0.1:8000/api/v1/tickets/'+payload.id+'/'
+        // console.log(url)
+          try {
+            await axios.put(url, payload)
+            commit('setLoading', false)
+          }
+          catch(error) {
+            commit('setLoading', false)
+            commit('setError', error.message)
+            throw error
+          }
+      },
+      async VISIT_LOG_API({commit} ,payload) {
+        commit('setLoading', true)
+        // console.log(payload)
+        const url = 'http://127.0.0.1:8000/api/v1/kidvisitlogs/'+payload.id+'/';
+        const today = new Date().toISOString().substr(0, 10);
+        let todayDate = [{
+          date: today,
+          isHere: payload.isHere,
+        }];
+
+        console.log(url)
+          try {
+            let response = await axios.get(url)
+            
+            response.data.dates = response.data.dates.concat(todayDate)
+            console.log(response.data)
+            
+            await axios.put(url, response.data)
+              
+            commit('setLoading', false)
+            
+          }
+          catch(error) {
+            commit('setLoading', false)
+            commit('setError', error.message)
+            throw error
+          }
+      },
     
   },
   

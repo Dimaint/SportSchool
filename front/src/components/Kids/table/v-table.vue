@@ -5,35 +5,15 @@
       
         <v-list width="1000">
       
-               <v-list-item
+               <kid
         v-for="kid in kids_data"
         :key="kid.key"
+        :kid_data="kid"
         :to="'/kid/' + kid.id"
       >
-         <v-list-item-avatar>
-          <v-img :src="kid.photo"></v-img>
-        </v-list-item-avatar>
-        
-        <v-list-item-content>
-          <v-list-item-title v-text="kid.last_name + '  '+ kid.first_name"></v-list-item-title>
-        </v-list-item-content>
-
-        <v-spacer></v-spacer>
-
-        <v-chip
-          class="ma-2"
-          color=""
-          label
-          text-color=""
-
-        > {{kid.tickets}}</v-chip>
-
-        <v-spacer></v-spacer>
-
-        <v-btn class="mr-2" depressed small color="green">Here</v-btn>
-        <v-btn depressed small color="error">Absent</v-btn>
+         
        
-      </v-list-item>
+      </kid>
       
     </v-list>
         </v-row>
@@ -42,8 +22,13 @@
 </template>
 
 <script>
+import kid from './Kid'
+
 export default {
     name: "v-table",
+    components: {
+      kid
+    },
     props: {
         kids_data: {
             type:Array,
@@ -51,6 +36,9 @@ export default {
                 return []
             }
         }
-    }
+    },
+    methods: {
+      
+    },
 }
 </script>
