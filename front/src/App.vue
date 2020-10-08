@@ -116,8 +116,11 @@ export default {
   },
   mounted() {
     this.GET_KIDS_FROM_API();
-    this.VERIFICATION_JWT();
+    
   },
+  created() {
+    this.VERIFICATION_JWT();
+  }
   
 };
 </script>

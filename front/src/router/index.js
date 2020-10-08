@@ -84,15 +84,19 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  store.dispatch("VERIFICATION_JWT").then(() => {
   if(to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isLoggedIn == true) {
+    if (store.getters.isLoggedIn) {
       next()
       return
-    }
-    next('/login') 
+    } 
+    next('/login')
+    return
   } else {
     next() 
   }
+})
+
 })
 
 export default router
