@@ -1,6 +1,6 @@
 <template>
   <v-list-item
-        
+        :to="'/kid/' + kid_data.id"
       >
          <v-list-item-avatar>
           <v-img :src="kid_data.photo"></v-img>
@@ -27,7 +27,7 @@
         small
         color="green"
         :loading="loading || loading"
-        @click.once="toClickHere"
+        @click="toClickHere"
         >Here</v-btn>
 
         <v-btn
@@ -35,7 +35,7 @@
         small
         color="error"
         :loading="loading || loading"
-        @click.once="toClickAbsent"
+        @click="toClickAbsent"
         >Absent</v-btn>
        
       </v-list-item>
@@ -79,6 +79,9 @@ export default {
         .then(() => {
           this.$store.dispatch('VISIT_LOG_API', payload)
         })
+          .then(() => {
+          this.kid_data.tickets.tickets--
+        })
         .catch((error) => {
               console.log(error);
             });
@@ -93,6 +96,9 @@ export default {
       this.$store.dispatch('USE_TICKET_API', payload)
         .then(() => {
           this.$store.dispatch('VISIT_LOG_API', payload)
+        })
+          .then(() => {
+          this.kid_data.tickets.tickets--
         })
         .catch((error) => {
               console.log(error);
