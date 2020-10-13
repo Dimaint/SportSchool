@@ -1,3 +1,5 @@
+from time import timezone
+
 from django.db import models
 from django.contrib.postgres.fields import JSONField
 
@@ -41,4 +43,6 @@ class Orders(models.Model):
 
     )
     status = models.CharField(max_length=20, choices=STATUSES, default='Создан')
+    createDate = models.DateTimeField(auto_now=False, auto_now_add=True, editable=False)
+    updateDate = models.DateTimeField(auto_now=True)
     isComplete = models.BooleanField(default=False)

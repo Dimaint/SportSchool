@@ -15,7 +15,7 @@ export default new Vuex.Store({
     isAuthenticated: false,
     jwt: localStorage.getItem('token'),
     userGroups: localStorage.getItem('userGroups'),
-    
+    orders: [],
   },
   mutations: {
     SET_KIDS_TO_VUEX: (state, kids) => {
@@ -109,7 +109,14 @@ export default new Vuex.Store({
           commit('SET_TRAINERS_TO_VUEX', response.data)
         })
     },
-    
+    GET_ORDERS_FROM_API({commit}) {
+      return axios('http://localhost:8000/api/v1/orders/', {
+        method: 'GET'
+      })
+      .then((response) => {
+        commit('SET_ORDERS_TO_VUEX', response.data)
+      })
+    },
     //auth
     VERIFICATION_JWT({commit, state}) {
       
@@ -258,6 +265,11 @@ export default new Vuex.Store({
     USER_IS_PARENT: state => state.userGroups.indexOf( 'parents' ) != -1,
     USER_IS_MANAGER: state => state.userGroups.indexOf( 'managers' ) != -1,
 
-  
+    ORDERS(state) {
+      return state.orders;
+    },
+    ORDER_BY_ID:state => id => {
+      return state.orders.find(order => order.id === id);
+    },
   }
 })

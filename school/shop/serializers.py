@@ -13,6 +13,7 @@ class OrdersSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Orders
-        fields = (
-        'id', 'firstName', 'lastName', 'middleName', 'email', 'phone', 'address', 'message', 'cart', 'cartTotalCost',
-        'status')
+        fields = '__all__'
+        # (
+        # 'id', 'firstName', 'lastName', 'middleName', 'email', 'phone', 'address', 'message', 'cart', 'cartTotalCost',
+        # 'status')
