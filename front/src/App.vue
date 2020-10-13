@@ -71,15 +71,7 @@ export default {
   data: () => ({
     //
     drawer: false,
-    // links: [
-    //   { title: "Home", url: "/home", icon: "mdi-home" },
-    //   { title: "Kids", url: "/kids", icon: "mdi-format-list-bulleted"},
-    //   { title: "Shop", url: "/shop", icon: "mdi-cart-outline"},
-    //   { title: "Trainers", url: "/trainers", icon: "mdi-account-group"},
-    //   { title: "Login", url: "/login", icon: "mdi-lock-open-variant"},
-    //   { title: "Registration", url: "/registration", icon: "mdi-account-plus"}
-
-    // ],
+    
   }),
   computed: {
     ...mapGetters(["KIDS", "isLoggedIn"]),
@@ -87,21 +79,38 @@ export default {
       return this.$store.getters.isLoggedIn
     },
     links() {
-      if (this.$store.getters.isLoggedIn) {
+      if (this.$store.getters.isLoggedIn && this.$store.getters.USER_IS_ADMIN) {
         return [
           { title: "Home", url: "/home", icon: "mdi-home" },
           { title: "Kids", url: "/kids", icon: "mdi-format-list-bulleted"},
           { title: "Shop", url: "/shop", icon: "mdi-cart-outline"},
+          { title: "Orders", url: "/orders", icon: "mdi-clipboard-text-outline" },
           { title: "Trainers", url: "/trainers", icon: "mdi-account-group"},
           // { title: "Login", url: "/login", icon: "mdi-lock-open-variant"},
           // { title: "Registration", url: "/registration", icon: "mdi-account-plus"}
         ]
-      } else {
+      } 
+      else if (this.$store.getters.isLoggedIn && this.$store.getters.USER_IS_MANAGER) {
+        return [
+          { title: "Orders", url: "/orders", icon: "mdi-clipboard-text-outline" },
+        ]
+      }
+      else if (this.$store.getters.isLoggedIn && this.$store.getters.USER_IS_TRAINER) {
+        return [
+          { title: "Kids", url: "/kids", icon: "mdi-format-list-bulleted"},
+        ]
+      }
+      else if (this.$store.getters.isLoggedIn && this.$store.getters.USER_IS_PARENT) {
         return [
           { title: "Home", url: "/home", icon: "mdi-home" },
-          //{ title: "Kids", url: "/kids", icon: "mdi-format-list-bulleted"},
+          { title: "My Kid", url: "/kid/1", icon: "mdi-account-outline"},
           { title: "Shop", url: "/shop", icon: "mdi-cart-outline"},
-          //{ title: "Trainers", url: "/trainers", icon: "mdi-account-group"},
+        ]
+      }
+      else {
+        return [
+          { title: "Home", url: "/home", icon: "mdi-home" },
+          { title: "Shop", url: "/shop", icon: "mdi-cart-outline"},
           { title: "Login", url: "/login", icon: "mdi-lock-open-variant"},
           { title: "Registration", url: "/registration", icon: "mdi-account-plus"}
         ]
@@ -112,15 +121,15 @@ export default {
     ...mapActions(["GET_KIDS_FROM_API", "VERIFICATION_JWT", "REMOVE_TOKEN"]),
     onLogout () {
       this.$store.commit('REMOVE_TOKEN')
+      this.$router.push({ name: "home" })
+      
     }
   },
   mounted() {
     this.GET_KIDS_FROM_API();
     
   },
-  created() {
-    this.VERIFICATION_JWT();
-  }
+  
   
 };
 </script>

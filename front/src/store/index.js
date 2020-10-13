@@ -14,6 +14,8 @@ export default new Vuex.Store({
     trainers: [],
     isAuthenticated: false,
     jwt: localStorage.getItem('token'),
+    userGroups: localStorage.getItem('userGroups'),
+    
   },
   mutations: {
     SET_KIDS_TO_VUEX: (state, kids) => {
@@ -51,6 +53,11 @@ export default new Vuex.Store({
       state.isAuthenticated = true
     },
 
+    SET_USER_GROUPS(state, groups) {
+      localStorage.setItem('userGroups', groups);
+      state.userGroups = groups
+    },
+
     UPDATE_TOKEN(state, newToken) {
       
       localStorage.setItem('token', newToken);
@@ -62,7 +69,13 @@ export default new Vuex.Store({
       localStorage.removeItem('token');
       state.jwt = null;
       state.isAuthenticated = false;
-    }
+      localStorage.removeItem('userGroups');
+      state.userGroups = null;
+    },
+
+    SET_ORDERS_TO_VUEX(state, orders) {
+      state.orders = orders;
+    },
     
   },
   actions: {
@@ -96,6 +109,7 @@ export default new Vuex.Store({
           commit('SET_TRAINERS_TO_VUEX', response.data)
         })
     },
+    
     //auth
     VERIFICATION_JWT({commit, state}) {
       
@@ -121,11 +135,12 @@ export default new Vuex.Store({
     async LOGIN_JWT({commit}, payload) {
       commit('setLoading', true)
           try {
-              const response = await axios.post("http://localhost:8000/auth/jwt/create/", payload)
+              const response = await axios.post("http://localhost:8000/token/", payload) //"http://localhost:8000/auth/jwt/create/"
               // .then((response) => {
               commit("UPDATE_TOKEN", response.data.access);
-              // console.log(response.data.access)
+              // console.log(response.data.groups)
               commit("SET_AUTH_USER", { isAuthenticated: true });
+              commit("SET_USER_GROUPS", response.data.groups)
               commit('setLoading', false) //}) 
           }
           catch(error) {
@@ -236,6 +251,13 @@ export default new Vuex.Store({
     KIDS_BY_TRAINER_ID:state => id => {
       return state.kids.filter(item => item.trainer.id === id)
     },
-    isLoggedIn: state => state.isAuthenticated
+    isLoggedIn: state => state.isAuthenticated,
+    
+    USER_IS_ADMIN: state => state.userGroups.indexOf( 'admin' ) != -1,
+    USER_IS_TRAINER: state => state.userGroups.indexOf( 'trainers' ) != -1,
+    USER_IS_PARENT: state => state.userGroups.indexOf( 'parents' ) != -1,
+    USER_IS_MANAGER: state => state.userGroups.indexOf( 'managers' ) != -1,
+
+  
   }
 })
