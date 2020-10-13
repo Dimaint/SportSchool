@@ -215,7 +215,7 @@ export default {
         phone: this.phone,
         address: this.address,
         message: this.message,
-        cart: JSON.stringify(this.cart_data),
+        cart: this.cart_data,
         cartTotalCost: this.cartTotalCost,
     };
     this.$store.dispatch('CREATE_ORDER', payload)
