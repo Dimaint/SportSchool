@@ -23,8 +23,8 @@ class Groups(models.Model):
     name = models.CharField(max_length=40)
     description = models.TextField(verbose_name='Краткое описание группы', default='')
     WEEK_DAYS = (
-        ('1,3,5', 'Вторник/Четверг'),
-        ('2,4,5', 'Понедельник/Среда'),
+        ('2,4,5', 'Вторник/Четверг'),
+        ('1,3,5', 'Понедельник/Среда'),
 
     )
     days = models.CharField(max_length=30, choices=WEEK_DAYS, default='none')
